@@ -67,7 +67,7 @@ function BookAppointment() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("Error checking appointment availability");
+      toast.error("Error checking appointments availability");
       dispatch(hideLoading());
     }
   };
