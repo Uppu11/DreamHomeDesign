@@ -17,7 +17,7 @@ function ApplyStaff() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/user/apply-Staff-account",
+        "/api/user/apply-staff-account",
         {
           ...values,
           userId: user._id,

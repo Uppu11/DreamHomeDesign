@@ -1,11 +1,12 @@
+import { Button, Col, DatePicker, Form, Input, Row, TimePicker } from "antd";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import { Button, Col, DatePicker, Row, TimePicker } from "antd";
-import { useDispatch, useSelector } from "react-redux"; // Importing useSelector hook
+import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import StaffForm from "../components/StaffForm";
 import moment from "moment";
 
 function BookAppointment() {
@@ -13,18 +14,18 @@ function BookAppointment() {
   const navigate = useNavigate();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
+  const { user } = useSelector((state) => state.user);
+  const [staff, setStaff] = useState(null);
   const params = useParams();
   const dispatch = useDispatch();
-  const [staff, setStaff] = useState(null);
-  const user = useSelector((state) => state.user); // Fetching user from Redux state
 
   const getStaffData = async () => {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/Staff/get-Staff-info-by-id",
+        "/api/staff/get-staff-info-by-id",
         {
-          StaffId: params.StaffId,
+          staffId: params.staffId,
         },
         {
           headers: {
@@ -42,14 +43,13 @@ function BookAppointment() {
       dispatch(hideLoading());
     }
   };
-
   const checkAvailability = async () => {
     try {
       dispatch(showLoading());
       const response = await axios.post(
         "/api/user/check-booking-avilability",
         {
-          StaffId: params.StaffId,
+          staffId: params.staffId,
           date: date,
           time: time,
         },
@@ -67,11 +67,10 @@ function BookAppointment() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("Error checking appointments availability");
+      toast.error("Error booking appointment");
       dispatch(hideLoading());
     }
   };
-
   const bookNow = async () => {
     setIsAvailable(false);
     try {
@@ -79,9 +78,9 @@ function BookAppointment() {
       const response = await axios.post(
         "/api/user/book-appointment",
         {
-          StaffId: params.StaffId,
+          staffId: params.staffId,
           userId: user._id,
-          StaffInfo: staff,
+          staffInfo: staff,
           userInfo: user,
           date: date,
           time: time,
@@ -95,8 +94,9 @@ function BookAppointment() {
 
       dispatch(hideLoading());
       if (response.data.success) {
+
         toast.success(response.data.message);
-        navigate("/appointments");
+        navigate('/appointments')
       }
     } catch (error) {
       toast.error("Error booking appointment");
@@ -107,7 +107,6 @@ function BookAppointment() {
   useEffect(() => {
     getStaffData();
   }, []);
-
   return (
     <Layout>
       {staff && (
@@ -117,12 +116,13 @@ function BookAppointment() {
           </h1>
           <hr />
           <Row gutter={20} className="mt-5" align="middle">
+
             <Col span={8} sm={24} xs={24} lg={8}>
               <img
                 src="https://thumbs.dreamstime.com/b/finger-press-book-now-button-booking-reservation-icon-online-149789867.jpg"
                 alt=""
                 width="100%"
-                height="400"
+                height='400'
               />
             </Col>
             <Col span={8} sm={24} xs={24} lg={8}>
@@ -139,7 +139,7 @@ function BookAppointment() {
               </p>
               <p>
                 <b>Fee per Visit : </b>
-                {staff.feePerVisit}
+                {staff.feePerCunsultation}
               </p>
               <p>
                 <b>Website : </b>
@@ -161,14 +161,13 @@ function BookAppointment() {
                     setTime(moment(value).format("HH:mm"));
                   }}
                 />
-                {!isAvailable && (
-                  <Button
-                    className="primary-button mt-3 full-width-button"
-                    onClick={checkAvailability}
-                  >
-                    Check Availability
-                  </Button>
-                )}
+                {!isAvailable && <Button
+                  className="primary-button mt-3 full-width-button"
+                  onClick={checkAvailability}
+                >
+                  Check Availability
+                </Button>}
+
                 {isAvailable && (
                   <Button
                     className="primary-button mt-3 full-width-button"
@@ -179,6 +178,7 @@ function BookAppointment() {
                 )}
               </div>
             </Col>
+
           </Row>
         </div>
       )}

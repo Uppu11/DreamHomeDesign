@@ -14,7 +14,7 @@ function StaffAppointments() {
     try {
       dispatch(showLoading());
       const resposne = await axios.get(
-        "/api/Staff/get-appointments-by-Staff-id",
+        "/api/staff/get-appointments-by-staff-id",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -34,8 +34,8 @@ function StaffAppointments() {
     try {
       dispatch(showLoading());
       const resposne = await axios.post(
-        "/api/Staff/change-appointment-status",
-        { appointmentId : record._id, status: status },
+        "/api/staff/change-appointment-status",
+        { appointmentId: record._id, status: status },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -48,7 +48,7 @@ function StaffAppointments() {
         getAppointmentsData();
       }
     } catch (error) {
-      toast.error("Error changing Staff account status");
+      toast.error("Error changing staff account status");
       dispatch(hideLoading());
     }
   };
@@ -65,7 +65,7 @@ function StaffAppointments() {
     {
       title: "Phone",
       dataIndex: "phoneNumber",
-      render: (text, record) => <span>{record.StaffInfo.phoneNumber}</span>,
+      render: (text, record) => <span>{record.staffInfo.phoneNumber}</span>,
     },
     {
       title: "Date & Time",

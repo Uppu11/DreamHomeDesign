@@ -28,15 +28,15 @@ function Appointments() {
   };
   const columns = [
     {
-        title: "Id",
-        dataIndex: "_id",
+      title: "Id",
+      dataIndex: "_id",
     },
     {
       title: "Staff",
       dataIndex: "name",
       render: (text, record) => (
         <span>
-          {record.StaffInfo.firstName} {record.StaffInfo.lastName}
+          {record.staffInfo.firstName} {record.staffInfo.lastName}
         </span>
       ),
     },
@@ -45,7 +45,7 @@ function Appointments() {
       dataIndex: "phoneNumber",
       render: (text, record) => (
         <span>
-          {record.StaffInfo.phoneNumber} 
+          {record.staffInfo.phoneNumber}
         </span>
       ),
     },
@@ -59,18 +59,18 @@ function Appointments() {
       ),
     },
     {
-        title: "Status",
-        dataIndex: "status",
+      title: "Status",
+      dataIndex: "status",
     }
   ];
   useEffect(() => {
     getAppointmentsData();
   }, []);
-  return  <Layout>
-  <h1 className="page-title">Appointments</h1>
-  <hr />
-  <Table columns={columns} dataSource={appointments} />
-</Layout>
+  return <Layout>
+    <h1 className="page-title">Appointments</h1>
+    <hr />
+    <Table columns={columns} dataSource={appointments} />
+  </Layout>
 }
 
 export default Appointments;

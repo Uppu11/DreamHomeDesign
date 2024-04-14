@@ -1,21 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
-const StaffModel = require("../models/StaffModel"); // Changed variable name to StaffModel
+const Staff = require("../models/staffModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 
-router.get("/get-all-Staffs", authMiddleware, async (req, res) => {
+router.get("/get-all-staffs", authMiddleware, async (req, res) => {
   try {
-    const Staffs = await StaffModel.find({}); // Changed variable name to StaffModel
+    const staffs = await Staff.find({});
     res.status(200).send({
       message: "Staffs fetched successfully",
       success: true,
-      data: Staffs,
+      data: staffs,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      message: "Error fetching Staffs",
+      message: "Error applying staff account",
       success: false,
       error,
     });
@@ -33,7 +33,7 @@ router.get("/get-all-users", authMiddleware, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      message: "Error fetching users",
+      message: "Error applying staff account",
       success: false,
       error,
     });
@@ -41,20 +41,20 @@ router.get("/get-all-users", authMiddleware, async (req, res) => {
 });
 
 router.post(
-  "/change-Staff-account-status",
+  "/change-staff-account-status",
   authMiddleware,
   async (req, res) => {
     try {
-      const { StaffId, status } = req.body;
-      const staff = await StaffModel.findByIdAndUpdate(StaffId, {
+      const { staffId, status } = req.body;
+      const staff = await Staff.findByIdAndUpdate(staffId, {
         status,
-      }); // Changed variable name to staff
+      });
 
-      const user = await User.findOne({ _id: staff.userId }); // Changed variable name to staff
+      const user = await User.findOne({ _id: staff.userId });
       const unseenNotifications = user.unseenNotifications;
       unseenNotifications.push({
-        type: "new-Staff-request-changed",
-        message: `Your Staff account has been ${status}`,
+        type: "new-staff-request-changed",
+        message: `Your staff account has been ${status}`,
         onClickPath: "/notifications",
       });
       user.isStaff = status === "approved" ? true : false;
@@ -68,12 +68,14 @@ router.post(
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: "Error applying Staff account status",
+        message: "Error applying staff account",
         success: false,
         error,
       });
     }
   }
 );
+
+
 
 module.exports = router;

@@ -5,11 +5,11 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    StaffId: {
+    staffId: {
       type: String,
       required: true,
     },
-    StaffInfo: {
+    staffInfo: {
       type: Object,
       required: true,
     },
@@ -36,5 +36,5 @@ const appointmentSchema = new mongoose.Schema(
   }
 );
 
-const appointmentModel = mongoose.model("appointments", appointmentSchema);
+const appointmentModel = mongoose.model("appointment", appointmentSchema);
 module.exports = appointmentModel;

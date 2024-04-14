@@ -1,6 +1,6 @@
 ## MERN Stack Staff Appointment Booking App
 
-MERN Stack Staff Appointment Booking Application using React , Redux Toolkit , AntD , Node , MongoDB 
+MERN Stack Staff Appointment Booking Application using React , Redux Toolkit , AntD , Node , MongoDB
 
 ## Features :
 
@@ -15,4 +15,3 @@ Redux Toolkit,
 Notifications Functionality for Users, Admin, and Staffs
 
 Manage Users, Staffs, and Appointments from the Admin panel
-

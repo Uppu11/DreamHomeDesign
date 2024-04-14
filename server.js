@@ -10,7 +10,7 @@ const path = require("path");
 
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
-app.use("/api/Staff", staffRoute);
+app.use("/api/staff", staffRoute);
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static("client/build"));

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const StaffSchema = new mongoose.Schema(
+const staffSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
@@ -33,11 +33,11 @@ const StaffSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    feePerVisit: {
+    feePerCunsultation: {
       type: Number,
       required: true,
     },
-    timings : {
+    timings: {
       type: Array,
       required: true,
     },
@@ -51,5 +51,5 @@ const StaffSchema = new mongoose.Schema(
   }
 );
 
-const StaffModel = mongoose.model("Staffs", StaffSchema);
-module.exports = StaffModel;
+const staffModel = mongoose.model("staffs", staffSchema);
+module.exports = staffModel;

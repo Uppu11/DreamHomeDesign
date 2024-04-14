@@ -42,7 +42,7 @@ function Userslist() {
     {
       title: "Created At",
       dataIndex: "createdAt",
-      render: (record , text) => moment(record.createdAt).format("DD-MM-YYYY"),
+      render: (record, text) => moment(record.createdAt).format("DD-MM-YYYY"),
     },
     {
       title: "Actions",
@@ -59,7 +59,7 @@ function Userslist() {
     <Layout>
       <h1 className="page-header">Users List</h1>
       <hr />
-      <Table columns={columns} dataSource={users}/>
+      <Table columns={columns} dataSource={users} />
     </Layout>
   );
 }

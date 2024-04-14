@@ -53,7 +53,7 @@ function App() {
           }
         />
         <Route
-          path="/apply-Staff"
+          path="/apply-staff"
           element={
             <ProtectedRoute>
               <ApplyStaff />
@@ -78,7 +78,7 @@ function App() {
         />
 
         <Route
-          path="/admin/Staffslist"
+          path="/admin/staffslist"
           element={
             <ProtectedRoute>
               <StaffsList />
@@ -87,7 +87,7 @@ function App() {
         />
 
         <Route
-          path="/Staff/profile/:userId"
+          path="/staff/profile/:userId"
           element={
             <ProtectedRoute>
               <Profile />
@@ -96,7 +96,7 @@ function App() {
         />
 
         <Route
-          path="/book-appointment/:StaffId"
+          path="/book-appointment/:staffId"
           element={
             <ProtectedRoute>
               <BookAppointment />
@@ -113,7 +113,7 @@ function App() {
         />
 
         <Route
-          path="/Staff/appointments"
+          path="/staff/appointments"
           element={
             <ProtectedRoute>
               <StaffAppointments />

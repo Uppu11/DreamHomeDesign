@@ -12,14 +12,14 @@ import moment from "moment";
 function Profile() {
   const { user } = useSelector((state) => state.user);
   const params = useParams();
-  const [Staff, setStaff] = useState(null);
+  const [staff, setStaff] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/Staff/update-Staff-profile",
+        "/api/staff/update-staff-profile",
         {
           ...values,
           userId: user._id,
@@ -51,7 +51,7 @@ function Profile() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/Staff/get-Staff-info-by-user-id",
+        "/api/staff/get-staff-info-by-user-id",
         {
           userId: params.userId,
         },
@@ -79,7 +79,7 @@ function Profile() {
     <Layout>
       <h1 className="page-title">Staff Profile</h1>
       <hr />
-      {Staff && <StaffForm onFinish={onFinish} initivalValues={Staff} />}
+      {staff && <StaffForm onFinish={onFinish} initivalValues={staff} />}
     </Layout>
   );
 }

@@ -97,7 +97,7 @@ function StaffForm({ onFinish, initivalValues }) {
           <Form.Item
             required
             label="Fee Per Cunsultation"
-            name="feePerVisit"
+            name="feePerCunsultation"
             rules={[{ required: true }]}
           >
             <Input placeholder="Fee Per Cunsultation" type="number" />

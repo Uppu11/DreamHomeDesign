@@ -1,43 +1,43 @@
 const express = require("express");
 const router = express.Router();
-const StaffModel = require("../models/StaffModel"); // Changed variable name to StaffModel
+const Staff = require("../models/staffModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 const Appointment = require("../models/appointmentModel");
 const User = require("../models/userModel");
 
-router.post("/get-Staff-info-by-user-id", authMiddleware, async (req, res) => {
+router.post("/get-staff-info-by-user-id", authMiddleware, async (req, res) => {
   try {
-    const staff = await StaffModel.findOne({ userId: req.body.userId }); // Changed variable name to staff
+    const staff = await Staff.findOne({ userId: req.body.userId });
     res.status(200).send({
       success: true,
       message: "Staff info fetched successfully",
-      data: staff, // Changed variable name to staff
+      data: staff,
     });
   } catch (error) {
     res
       .status(500)
-      .send({ message: "Error getting Staff info", success: false, error });
+      .send({ message: "Error getting staff info", success: false, error });
   }
 });
 
-router.post("/get-Staff-info-by-id", authMiddleware, async (req, res) => {
+router.post("/get-staff-info-by-id", authMiddleware, async (req, res) => {
   try {
-    const staff = await StaffModel.findOne({ _id: req.body.staffId }); // Changed variable name to staff, and body property to lowercase 'staffId'
+    const staff = await Staff.findOne({ _id: req.body.staffId });
     res.status(200).send({
       success: true,
       message: "Staff info fetched successfully",
-      data: staff, // Changed variable name to staff
+      data: staff,
     });
   } catch (error) {
     res
       .status(500)
-      .send({ message: "Error getting Staff info", success: false, error });
+      .send({ message: "Error getting staff info", success: false, error });
   }
 });
 
-router.post("/update-Staff-profile", authMiddleware, async (req, res) => {
+router.post("/update-staff-profile", authMiddleware, async (req, res) => {
   try {
-    const staff = await StaffModel.findOneAndUpdate(
+    const staff = await Staff.findOneAndUpdate(
       { userId: req.body.userId },
       req.body
     );
@@ -49,17 +49,17 @@ router.post("/update-Staff-profile", authMiddleware, async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send({ message: "Error updating Staff profile", success: false, error }); // Changed error message
+      .send({ message: "Error getting staff info", success: false, error });
   }
 });
 
 router.get(
-  "/get-appointments-by-Staff-id",
+  "/get-appointments-by-staff-id",
   authMiddleware,
   async (req, res) => {
     try {
-      const staff = await StaffModel.findOne({ userId: req.body.userId });
-      const appointments = await Appointment.find({ StaffId: staff._id });
+      const staff = await Staff.findOne({ userId: req.body.userId });
+      const appointments = await Appointment.find({ staffId: staff._id });
       res.status(200).send({
         message: "Appointments fetched successfully",
         success: true,
@@ -75,5 +75,36 @@ router.get(
     }
   }
 );
+
+router.post("/change-appointment-status", authMiddleware, async (req, res) => {
+  try {
+    const { appointmentId, status } = req.body;
+    const appointment = await Appointment.findByIdAndUpdate(appointmentId, {
+      status,
+    });
+
+    const user = await User.findOne({ _id: appointment.userId });
+    const unseenNotifications = user.unseenNotifications;
+    unseenNotifications.push({
+      type: "appointment-status-changed",
+      message: `Your appointment status has been ${status}`,
+      onClickPath: "/appointments",
+    });
+
+    await user.save();
+
+    res.status(200).send({
+      message: "Appointment status updated successfully",
+      success: true
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error changing appointment status",
+      success: false,
+      error,
+    });
+  }
+});
 
 module.exports = router;

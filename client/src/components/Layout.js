@@ -23,12 +23,12 @@ function Layout({ children }) {
     },
     {
       name: "Apply Staff",
-      path: "/apply-Staff",
+      path: "/apply-staff",
       icon: "ri-hospital-line",
     }
   ];
 
-  const StaffMenu = [
+  const staffMenu = [
     {
       name: "Home",
       path: "/",
@@ -36,12 +36,12 @@ function Layout({ children }) {
     },
     {
       name: "Appointments",
-      path: "/Staff/appointments",
+      path: "/staff/appointments",
       icon: "ri-file-list-line",
     },
     {
       name: "Profile",
-      path: `/Staff/profile/${user?._id}`,
+      path: `/staff/profile/${user?._id}`,
       icon: "ri-user-line",
     },
   ];
@@ -59,7 +59,7 @@ function Layout({ children }) {
     },
     {
       name: "Staffs",
-      path: "/admin/Staffslist",
+      path: "/admin/staffslist",
       icon: "ri-user-star-line",
     },
     {
@@ -69,7 +69,7 @@ function Layout({ children }) {
     },
   ];
 
-  const menuToBeRendered = user?.isAdmin ? adminMenu : user?.isStaff ? StaffMenu : userMenu;
+  const menuToBeRendered = user?.isAdmin ? adminMenu : user?.isStaff ? staffMenu : userMenu;
   const role = user?.isAdmin ? "Admin" : user?.isStaff ? "Staff" : "User";
   return (
     <div className="main">
@@ -85,9 +85,8 @@ function Layout({ children }) {
               const isActive = location.pathname === menu.path;
               return (
                 <div
-                  className={`d-flex menu-item ${
-                    isActive && "active-menu-item"
-                  }`}
+                  className={`d-flex menu-item ${isActive && "active-menu-item"
+                    }`}
                 >
                   <i className={menu.icon}></i>
                   {!collapsed && <Link to={menu.path}>{menu.name}</Link>}

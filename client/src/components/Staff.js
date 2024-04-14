@@ -3,11 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 function Staff({ staff }) {
   const navigate = useNavigate();
-
-  if (!staff) {
-    return null; // or render a loading indicator or placeholder
-  }
-
   return (
     <div
       className="card p-2 cursor-pointer"
@@ -27,15 +22,11 @@ function Staff({ staff }) {
       </p>
       <p>
         <b>Fee per Visit : </b>
-        {staff.feePerVisit}
+        {staff.feePerCunsultation}
       </p>
       <p>
         <b>Timings : </b>
-        {staff.timings && staff.timings.length > 1 ? (
-          `${staff.timings[0]} - ${staff.timings[1]}`
-        ) : (
-          "No timings available"
-        )}
+        {staff.timings[0]} - {staff.timings[1]}
       </p>
     </div>
   );
