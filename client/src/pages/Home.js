@@ -5,6 +5,7 @@ import { Col, Row } from "antd";
 import Staff from "../components/Staff";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
+
 function Home() {
   const [staffs, setStaffs] = useState([]);
   const dispatch = useDispatch();

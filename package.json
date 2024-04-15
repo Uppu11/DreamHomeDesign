@@ -25,6 +25,9 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.3",
     "mongoose": "^6.4.0",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "react-dropzone": "^14.2.3",
+    "react-select": "^5.8.0",
+    "sonner": "^1.4.41"
   }
 }
